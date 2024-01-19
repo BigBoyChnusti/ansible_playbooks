@@ -41,11 +41,11 @@
     line: "PasswordAuthentication no"
   register: sshd_config
 
-- name: Enable passwordless sudo for "{{ username }}"
+- name: Enable passwordless sudo for user1
   lineinfile:
     dest: /etc/sudoers
     regexp: "^%wheel"
-    line: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
+    line: "user1 ALL=(ALL) NOPASSWD: ALL"
     validate: 'bash -c "cat /etc/sudoers %s | visudo -cf-"'
 
 - name: Restart SSH Daemon
