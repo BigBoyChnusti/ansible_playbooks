@@ -13,13 +13,25 @@
 - name: Install essential packages ubuntu
   when: inventory_hostname in lookup('inventory_hostnames', 'ubuntu:prox')
   package:
-    name: "{{ ubuntu_packages }}"
+    name:
+      - vim
+      - htop
+      - bpytop
+      - neofetch
+      - tmux
+      - speedtest-cli
     state: latest
 
 - name: Install essential packages fedora
   when: inventory_hostname in groups['fedora']
   package:
-    name: "{{ packages }}"
+    name:
+      - vim
+      - htop
+      - bpytop
+      - neofetch
+      - tmux
+      - speedtest-cli
     state: latest
 
 - name: Disable SSH password auth
