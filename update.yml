@@ -9,9 +9,3 @@
   apt:
     name: "*"
     state: latest
-
-- name: update proxmox server
-  when: inventory_hostname in groups['prox']
-  apt:
-    name: "*"
-    state: latest
