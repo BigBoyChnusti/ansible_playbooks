@@ -26,7 +26,7 @@
 
 - name: copy snmp config file to target dir
   ansible.builtin.copy:
-    src: /home/user1/snmp
+    src: snmp
     dest: /etc/snmp/snmpd.conf
     backup: yes
   register: snmp_conf_copy
