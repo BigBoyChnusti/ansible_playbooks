@@ -1,0 +1,4 @@
+- name: update proxmox server
+  apt:
+    name: "*"
+    state: latest
