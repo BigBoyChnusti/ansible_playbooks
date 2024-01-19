@@ -1,0 +1,6 @@
+---
+- hosts: prox
+  become: yes
+
+  tasks:
+    - import_tasks: update_prox.yml
