@@ -1,0 +1,17 @@
+- name: Update packages fedora
+  when: inventory_hostname in groups['fedora']
+  dnf:
+    name: "*"
+    state: latest
+
+- name: Update packages ubuntu
+  when: inventory_hostname in groups['ubuntu']
+  apt:
+    name: "*"
+    state: latest
+
+- name: Update packages proxmox
+  when: inventory_hostname in groups['prox']
+  apt:
+    name: "*"
+    state: latest
