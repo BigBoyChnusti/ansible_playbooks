@@ -1,15 +1,16 @@
-
+- name: update fedora server
   when: inventory_hostname in groups['fedora']
   dnf:
     name: "*"
     state: latest
 
-
+- name: update ubuntu server
   when: inventory_hostname in groups['ubuntu']
   apt:
     name: "*"
     state: latest
 
+- name: update proxmox server
   when: inventory_hostname in groups['prox']
   apt:
     name: "*"
