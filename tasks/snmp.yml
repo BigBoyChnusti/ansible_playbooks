@@ -1,0 +1,68 @@
+- name: Update packages rpm base
+  when: inventory_hostname in groups['fedora']
+  dnf:
+    name: "*"
+    state: latest
+
+- name: Update packages deb base
+  when: inventory_hostname in lookup('inventory_hostnames', 'ubuntu:prox')
+  apt:
+    name: "*"
+    state: latest
+
+- name: install snmp and syslog-ng ubuntu
+  when: inventory_hostname in lookup('inventory_hostnames', 'ubuntu:prox')
+  package:
+    name:
+      - snmpd
+      - syslog-ng
+
+- name: install snmp and syslog-ng fedora
+  when: inventory_hostname in groups['fedora']
+  package:
+    name: 
+      - net-snmp
+      - syslog-ng
+
+- name: copy snmp config file to target dir
+  ansible.builtin.copy:
+    src: /home/user1/snmp
+    dest: /etc/snmp/snmpd.conf
+    backup: yes
+  register: snmp_conf_copy
+
+- name: Download distro script
+  get_url:
+    url: https://raw.githubusercontent.com/librenms/librenms-agent/master/snmp/distro
+    dest: /usr/bin/distro
+  become: yes
+
+- name: Set execute permissions on distro script
+  file:
+    path: /usr/bin/distro
+    mode: +x
+  become: yes
+
+- name: Open SNMP port on the firewall
+  when: inventory_hostname in groups['ubuntu']
+  ufw:
+    rule: allow
+    port: 161
+    proto: udp
+  become: yes
+
+- name: Open SNMP port on the firewall using firewalld
+  when: inventory_hostname in groups['fedora']
+  firewalld:
+    service: snmp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  become: yes
+
+
+- name: restart snmpd on target machine
+  ansible.builtin.systemd_service:
+    name: snmpd.service
+    state: reloaded
+  when: snmp_conf_copy.changed

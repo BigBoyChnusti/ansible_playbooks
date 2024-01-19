@@ -1,0 +1,43 @@
+- name: Update packages ubuntu
+  when: inventory_hostname in lookup('inventory_hostnames', 'ubuntu:prox')
+  apt:
+    name: "*"
+    state: latest
+
+- name: Update packages fedora
+  when: inventory_hostname in groups['fedora']
+  dnf:
+    name: "*"
+    state: latest
+
+- name: Install essential packages ubuntu
+  when: inventory_hostname in lookup('inventory_hostnames', 'ubuntu:prox')
+  package:
+    name: "{{ ubuntu_packages }}"
+    state: latest
+
+- name: Install essential packages fedora
+  when: inventory_hostname in groups['fedora']
+  package:
+    name: "{{ packages }}"
+    state: latest
+
+- name: Disable SSH password auth
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#PasswordAuthentication yes"
+    line: "PasswordAuthentication no"
+  register: sshd_config
+
+- name: Enable passwordless sudo for "{{ username }}"
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: "^%wheel"
+    line: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
+    validate: 'bash -c "cat /etc/sudoers %s | visudo -cf-"'
+
+- name: Restart SSH Daemon
+  service:
+    name: sshd
+    state: restarted
+  when: sshd_config.changed
