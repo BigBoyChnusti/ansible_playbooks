@@ -32,16 +32,17 @@
   register: snmp_conf_copy
 
 - name: Download distro script
+  when: inventory_hostname in lookup('inventory_hostnames', 'ubuntu:prox')
   get_url:
     url: https://raw.githubusercontent.com/librenms/librenms-agent/master/snmp/distro
     dest: /usr/bin/distro
-  become: yes
+
 
 - name: Set execute permissions on distro script
   file:
     path: /usr/bin/distro
     mode: +x
-  become: yes
+
 
 - name: Open SNMP port on the firewall
   when: inventory_hostname in groups['ubuntu']
@@ -49,7 +50,7 @@
     rule: allow
     port: 161
     proto: udp
-  become: yes
+
 
 - name: Open SNMP port on the firewall using firewalld
   when: inventory_hostname in groups['fedora']
@@ -58,7 +59,7 @@
     permanent: yes
     state: enabled
     immediate: yes
-  become: yes
+
 
 
 - name: restart snmpd on target machine
