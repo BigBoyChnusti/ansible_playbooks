@@ -14,4 +14,4 @@
   ansible.posix.authorized_key:
     user: ansible
     state: present
-    key: "{{ lookup('file', '/ansible.pub') }}"
+    key: "{{ lookup('file', 'ansible.pub') }}"
