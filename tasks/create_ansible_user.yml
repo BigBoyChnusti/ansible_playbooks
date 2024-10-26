@@ -1,0 +1,12 @@
+- name: Add ansible group to host
+  ansible.builtin.group:
+    name: ansible
+    comment: group for ansible
+    gid: 4444
+    group: ansible
+- name: Add ansible user to host
+  ansible.builtin.user:
+    name: ansible
+    comment: service user for ansible
+    uid: 4444
+    group: ansible
