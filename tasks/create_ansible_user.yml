@@ -2,9 +2,16 @@
   ansible.builtin.group:
     name: ansible
     gid: 4444
+
 - name: Add ansible user to host
   ansible.builtin.user:
     name: ansible
     comment: service user for ansible
     uid: 4444
     group: ansible, sudo
+
+- name: Set authorized key taken from file
+  ansible.posix.authorized_key:
+    user: ansible
+    state: present
+    key: "{{ lookup('file', '/home/ansible/.ssh/ansible.pub') }}"
