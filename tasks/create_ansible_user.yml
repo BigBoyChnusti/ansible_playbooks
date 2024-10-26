@@ -7,4 +7,4 @@
     name: ansible
     comment: service user for ansible
     uid: 4444
-    group: ansible
+    group: ansible, sudo
