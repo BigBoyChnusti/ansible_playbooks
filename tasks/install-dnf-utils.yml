@@ -1,0 +1,4 @@
+- name: Install dnf-utils
+  package:
+    name: dnf-utils
+    state: latest
