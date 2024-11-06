@@ -4,6 +4,19 @@
     name: "*"
     state: latest
 
+- name: check if reboot is required
+  when: inventory_hostname in groups['fedora']
+  ansible.builtin.shell:
+    cmd: "needs-restarting -r -s"
+  register: needs-restarting
+  changed_when: needs-restarting.rc == 1
+  failed_when: needs-restarting.rc == 0
+
+- name: reboot after update
+  when: inventory_hostname in groups['fedora']
+  ansible.builtin.reboot:
+  when: needs-restarting.rc == 1
+
 - name: update ubuntu server
   when: inventory_hostname in groups['ubuntu']
   apt:
@@ -11,8 +24,3 @@
     state: latest
 
 
-- name: update proxmox server
-  when: inventory_hostname in groups['prox']
-  apt:
-    name: "*"
-    state: latest
