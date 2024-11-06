@@ -15,11 +15,11 @@
   failed_when: reboot_required.rc == 2
 
 - name: reboot after update
-  when: inventory_hostname in groups['fedora']
+  when:
+    - inventory_hostname in groups['fedora'] and reboot_required.rc == 1
   reboot:
     post_reboot_delay: 60
   throttle: 1
-  when: needs_restarting.rc == 1
 
 - name: update ubuntu server
   when: inventory_hostname in groups['ubuntu']
