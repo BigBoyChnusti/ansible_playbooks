@@ -1,11 +1,13 @@
 - name: update fedora server
-  when: inventory_hostname in groups['fedora']
+  when: 
+    - inventory_hostname in groups['fedora']
   dnf:
     name: "*"
     state: latest
 
 - name: Reboot required
-  when: inventory_hostname in groups['fedora']
+  when: 
+    - inventory_hostname in groups['fedora']
   command: "/usr/bin/needs-restarting -r"
   register: reboot_required
   ignore_errors: True
