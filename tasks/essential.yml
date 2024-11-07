@@ -32,6 +32,7 @@
       - neofetch
       - tmux
       - speedtest-cli
+      - dnf-utils
     state: latest
 
 - name: Disable SSH password auth
