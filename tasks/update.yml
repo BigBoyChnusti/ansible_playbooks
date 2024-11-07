@@ -1,11 +1,11 @@
-- name: FEDORA update server
+- name: FEDORA | update server
   when: 
     - inventory_hostname in groups['fedora']
   dnf:
     name: "*"
     state: latest
 
-- name: FEDORA check if reboot is required
+- name: FEDORA | check if reboot is required
   when: 
     - inventory_hostname in groups['fedora']
   command: "/usr/bin/needs-restarting -r"
@@ -14,26 +14,26 @@
   changed_when: False
   failed_when: reboot_required.rc == 2
 
-- name: FEDORA reboot after update (if required)
+- name: FEDORA | reboot after update (if required)
   when:
     - inventory_hostname in groups['fedora'] and reboot_required.rc == 1
   reboot:
     post_reboot_delay: 60
   throttle: 1
 
-- name: UBUNTU update server
+- name: UBUNTU | update server
   when: inventory_hostname in groups['ubuntu']
   apt:
     name: "*"
     state: latest
 
-- name: UBUNTU check if reboot is required (ubuntu)
+- name: UBUNTU | check if reboot is required
   when: inventory_hostname in groups['ubuntu']
   ansible.builtin.stat:
     path: /var/run/reboot-required
     get_checksum: no
   register: reboot_required_file
 
-- name: UBUNTU reboot after update (if required)
+- name: UBUNTU | reboot after update (if required)
   ansible.builtin.reboot:
   when: inventory_hostname in groups['ubuntu'] and reboot_required_file.stat.exists == true
