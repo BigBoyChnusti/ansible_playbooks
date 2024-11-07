@@ -28,6 +28,7 @@
     state: latest
 
 - name: UBUNTU check if reboot is required (ubuntu)
+  when: inventory_hostname in groups['ubuntu']
   ansible.builtin.stat:
     path: /var/run/reboot-required
     get_checksum: no
