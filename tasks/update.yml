@@ -36,4 +36,4 @@
 
 - name: UBUNTU reboot after update (if required)
   ansible.builtin.reboot:
-  when: inventory_hostname in groups['ubuntu'] and reboot_required_file.stats.exists == true
+  when: inventory_hostname in groups['ubuntu'] and reboot_required_file.stat.exists == true
