@@ -4,3 +4,4 @@
 
   tasks:
     - import_tasks: tasks/snmp.yml
+    - import_tasks: tasks/syslog-ng.yml
