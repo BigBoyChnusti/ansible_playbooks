@@ -15,14 +15,12 @@
   package:
     name:
       - snmpd
-      - syslog-ng
 
 - name: install snmp and syslog-ng fedora
   when: inventory_hostname in groups['fedora']
   package:
     name: 
       - net-snmp
-      - syslog-ng
 
 - name: copy snmp config file to target dir
   ansible.builtin.copy:

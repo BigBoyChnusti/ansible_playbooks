@@ -22,7 +22,7 @@
 
 - name: copy config
   ansible.builtin.copy:
-    src: /home/user1/syslog-ng.conf
+    src: syslog-ng.conf
     dest: /etc/syslog-ng/syslog-ng.conf
     backup: yes
   register: syslog-ng_conf_copy
