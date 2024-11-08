@@ -1,0 +1,15 @@
+- name: install package
+  package:
+    name: qemu-guest-agent
+
+- name: start service
+  ansible.builtin.systemd_service:
+    state: started
+    name: qemu-guest-agent
+
+- name: enable service
+  ansible.builtin.systemd_service:
+    name: qemu-guest-agent
+    enabled: true
+    masked: no
+
