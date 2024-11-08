@@ -16,10 +16,9 @@
     name:
       - vim
       - htop
-      - bpytop
-      - neofetch
       - tmux
       - speedtest-cli
+      - qemu-guest-agent
     state: latest
 
 - name: Install essential packages fedora
@@ -28,11 +27,10 @@
     name:
       - vim
       - htop
-      - bpytop
-      - neofetch
       - tmux
       - speedtest-cli
       - dnf-utils
+      - qemu-guest-agent
     state: latest
 
 - name: Disable SSH password auth
@@ -48,6 +46,17 @@
     regexp: "^%wheel"
     line: "user1 ALL=(ALL) NOPASSWD: ALL"
     validate: 'bash -c "cat /etc/sudoers %s | visudo -cf-"'
+
+- name: start service
+  ansible.builtin.systemd_service:
+    state: started
+    name: qemu-guest-agent
+
+- name: enable service
+  ansible.builtin.systemd_service:
+    name: qemu-guest-agent
+    enabled: true
+    masked: no
 
 - name: Restart SSH Daemon
   service:
