@@ -1,0 +1,4 @@
+- name: Prune containers and images
+  docker_prune:
+    containers: yes
+    images: yes
