@@ -36,7 +36,7 @@
     src: syslog-ng.conf
     dest: /etc/syslog-ng/syslog-ng.conf
     backup: yes
-  register: syslog-ng_conf_copy
+
 
 - name: Download distro script
   when: inventory_hostname in lookup('inventory_hostnames', 'ubuntu:prox')
