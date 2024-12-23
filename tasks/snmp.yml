@@ -31,7 +31,7 @@
     backup: yes
   register: snmp_conf_copy
 
-  - name: copy snmp config file to target dir
+- name: copy syslog-ng config file to target dir
   ansible.builtin.copy:
     src: syslog-ng.conf
     dest: /etc/syslog-ng/syslog-ng.conf
