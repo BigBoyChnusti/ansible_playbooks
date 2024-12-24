@@ -3,7 +3,7 @@
     name: cockpit
     state: stopped
 
-- name: Stop cockpit.sock
+- name: Stop cockpit.socket
   ansible.builtin.systemd_service:
-    name: cockpit.sock
+    name: cockpit.socket
     state: stopped
