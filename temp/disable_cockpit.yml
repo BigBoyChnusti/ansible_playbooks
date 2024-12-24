@@ -2,8 +2,10 @@
   ansible.builtin.systemd_service:
     name: cockpit
     state: stopped
+    enabled: false
 
 - name: Stop cockpit.socket
   ansible.builtin.systemd_service:
     name: cockpit.socket
     state: stopped
+    enabled: false

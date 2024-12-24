@@ -73,8 +73,10 @@
   ansible.builtin.systemd_service:
     name: snmpd.service
     state: reloaded
+    enabled: true
 
 - name: restart syslog-ng on target machine
   ansible.builtin.systemd_service:
     name: syslog-ng.service
     state: reloaded
+    enabled: true
