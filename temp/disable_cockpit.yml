@@ -1,0 +1,9 @@
+- name: Stop service cockpit
+  ansible.builtin.systemd_service:
+    name: cockpit
+    state: stopped
+
+- name: Stop cockpit.sock
+  ansible.builtin.systemd_service:
+    name: cockpit.sock
+    state: stopped
