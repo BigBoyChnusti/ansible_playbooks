@@ -67,16 +67,26 @@
     state: enabled
     immediate: yes
 
-
-
 - name: restart snmpd on target machine
   ansible.builtin.systemd_service:
     name: snmpd.service
     state: reloaded
-    enabled: true
-
+ 
 - name: restart syslog-ng on target machine
   ansible.builtin.systemd_service:
     name: syslog-ng.service
     state: reloaded
-    enabled: true
+
+- name: Stop service cockpit
+  when: inventory_hostname in groups['fedora']
+  ansible.builtin.systemd_service:
+    name: cockpit
+    state: stopped
+    enabled: false
+
+- name: Stop cockpit.socket
+  when: inventory_hostname in groups['fedora']
+  ansible.builtin.systemd_service:
+    name: cockpit.socket
+    state: stopped
+    enabled: false
