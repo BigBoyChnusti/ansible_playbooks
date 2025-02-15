@@ -62,3 +62,17 @@
     name: sshd
     state: restarted
   when: sshd_config.changed
+
+- name: Stop service cockpit
+  when: inventory_hostname in groups['fedora']
+  ansible.builtin.systemd_service:
+    name: cockpit
+    state: stopped
+    enabled: false
+
+- name: Stop cockpit.socket
+  when: inventory_hostname in groups['fedora']
+  ansible.builtin.systemd_service:
+    name: cockpit.socket
+    state: stopped
+    enabled: false

@@ -76,17 +76,3 @@
   ansible.builtin.systemd_service:
     name: syslog-ng.service
     state: reloaded
-
-- name: Stop service cockpit
-  when: inventory_hostname in groups['fedora']
-  ansible.builtin.systemd_service:
-    name: cockpit
-    state: stopped
-    enabled: false
-
-- name: Stop cockpit.socket
-  when: inventory_hostname in groups['fedora']
-  ansible.builtin.systemd_service:
-    name: cockpit.socket
-    state: stopped
-    enabled: false
